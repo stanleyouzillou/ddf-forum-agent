@@ -1,4 +1,5 @@
 import { randomUUID } from "crypto";
+import { PostTitle } from "./PostTitle";
 
 export type PostProps = {
   id: string;
@@ -16,10 +17,7 @@ export class Post {
   }
 
   static create(input: { title: string; url: string }): Post {
-    const title = (input.title ?? "").trim();
-    if (!title) {
-      throw new Error("TITLE_REQUIRED");
-    }
+    const title = PostTitle.create(input.title).value;
     const id = randomUUID();
     return new Post({ id, title, url: input.url ?? "", score: 0 });
   }

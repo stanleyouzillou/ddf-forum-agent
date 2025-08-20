@@ -1,24 +1,33 @@
 import { defineConfig } from "@playwright/test";
+import { defineBddConfig } from "playwright-bdd";
+
+const bddTestDir = defineBddConfig({
+  paths: ["features/**/*.feature"],
+  require: ["tests/e2e/steps/**/*.ts", "tests/e2e/hooks.ts"],
+});
 
 export default defineConfig({
-  testDir: "./tests/e2e",
-  use: {
-    baseURL: "http://localhost:3000",
-    trace: "on-first-retry",
-    screenshot: "only-on-failure",
-    video: "retain-on-failure",
-  },
+  projects: [
+    {
+      name: "e2e",
+      testDir: "tests/e2e",
+      use: { baseURL: "http://localhost:3000" },
+    },
+    {
+      name: "bdd",
+      testDir: bddTestDir,
+      use: { baseURL: "http://localhost:3000" },
+    },
+  ],
   reporter: [
-    ["line"],
+    ["list"],
     ["json", { outputFile: "playwright-report/results.json" }],
-    ["html", { open: "never", outputFolder: "playwright-report/html" }],
+    ["html", { outputFolder: "playwright-report/html", open: "never" }],
   ],
   webServer: {
-    // Use pnpm exec to reliably resolve local Next binary on Windows
-    command: "pnpm exec next dev -p 3000 --hostname 0.0.0.0",
-    // Point readiness check to an existing page to avoid 404 on '/'
+    command: "pnpm exec next dev -p 3000",
     url: "http://localhost:3000/popular",
-    reuseExistingServer: false, // force fresh start for debugging
-    timeout: 300000,
+    reuseExistingServer: !process.env.CI,
+    timeout: 120_000,
   },
 });

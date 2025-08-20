@@ -1,11 +1,5 @@
 import { Post } from "../domain/Post";
-
-export interface PostRepo {
-  add(post: Post): Promise<void>;
-  listPopular(): Promise<Post[]>;
-  getById(id: string): Promise<Post | undefined>;
-  update(post: Post): Promise<void>;
-}
+import { PostRepo } from "../domain/PostRepo";
 
 export class InMemoryPostRepo implements PostRepo {
   private items: Post[] = [];

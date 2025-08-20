@@ -1,9 +1,5 @@
-import { PostRepo } from "../infra/InMemoryPostRepo";
-
-export interface UpvotePostDTO {
-  postId: string;
-  memberId: string;
-}
+import { PostRepo } from "../domain/PostRepo";
+import { UpvotePostDTO } from "./dtos";
 
 export class UpvotePostUseCase {
   constructor(private readonly repo: PostRepo) {}

@@ -1,11 +1,6 @@
 import { Post } from "../domain/Post";
-import { PostRepo } from "../infra/InMemoryPostRepo";
-
-export interface CreatePostDTO {
-  title: string;
-  url: string;
-  authorId: string; // reserved for future use
-}
+import { PostRepo } from "../domain/PostRepo";
+import { CreatePostDTO } from "./dtos";
 
 export class CreatePostUseCase {
   constructor(private readonly repo: PostRepo) {}

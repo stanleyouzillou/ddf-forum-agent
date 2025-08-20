@@ -1,1 +1,1 @@
-export { default } from "../../../modules/api/createPostHandler";
+export { default } from "../../../modules/posts/api/createPostHandler";

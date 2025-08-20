@@ -1,1 +1,1 @@
-export { default } from "../../../../modules/api/upvotePostHandler";
+export { default } from "../../../../modules/posts/api/upvotePostHandler";
